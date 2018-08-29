@@ -8,6 +8,7 @@ export default class ReactConnectElements extends PureComponent {
     elements: PropTypes.array.isRequired,
     overlay: PropTypes.number,
     selector: PropTypes.string.isRequired,
+    useId: PropTypes.bool, // if selectors are ids
     strokeWidth: PropTypes.number,
     color: PropTypes.string,
   };
@@ -35,14 +36,22 @@ export default class ReactConnectElements extends PureComponent {
   };
 
   connectAll = () => {
-    const { elements } = this.props;
+    const { elements, useId } = this.props;
 
     elements.map((element, index) => {
-      const start = document.querySelector(element.from);
-      const end = document.querySelector(element.to);
-      const path = document.querySelector(`#path${index + 1}`);
+      if (useId) {
+        const start = document.getElementById(element.from);
+        const end = document.getElementById(element.to);
+        const path = document.querySelector(`#path${index + 1}`);
 
-      return connectElements(this.svgContainer, this.svg, path, start, end);
+        return connectElements(this.svgContainer, this.svg, path, start, end);
+      } else {
+        const start = document.querySelector(element.from);
+        const end = document.querySelector(element.to);
+        const path = document.querySelector(`#path${index + 1}`);
+
+        return connectElements(this.svgContainer, this.svg, path, start, end);
+      }
     });
   };
 
@@ -67,14 +76,26 @@ export default class ReactConnectElements extends PureComponent {
               }}
             >
               {elements.map((element, index) => (
-                <path
-                  key={`${element.from}-${element.to}`}
-                  id={`path${index + 1}`}
-                  d="M0 0"
-                  stroke={element.color || color}
-                  fill="none"
-                  strokeWidth={`${strokeWidth}px`}
-                />
+                element.isLeft ? (
+                  <path
+                    key={`${element.from}-${element.to}`}
+                    id={`path${index + 1}`}
+                    d="M0 0"
+                    stroke={element.color || color}
+                    fill="none"
+                    strokeWidth={`${strokeWidth}px`}
+                    strokeDasharray='10,10'
+                  />
+                ) : (
+                  <path
+                    key={`${element.from}-${element.to}`}
+                    id={`path${index + 1}`}
+                    d="M0 0"
+                    stroke={element.color || color}
+                    fill="none"
+                    strokeWidth={`${strokeWidth}px`}
+                  />
+                )
               ))}
             </svg>
           </div>
