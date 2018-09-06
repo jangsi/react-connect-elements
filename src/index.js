@@ -76,28 +76,33 @@ export default class ReactConnectElements extends PureComponent {
                 this.svg = svg;
               }}
             >
-              {elements.map((element, index) => (
-                element.isLeft ? (
-                  <path
-                    // key={`${element.from}-${element.to}`}
-                    id={`${this.props.md5}-path${index + 1}`}
-                    d="M0 0"
-                    stroke={element.color || color}
-                    fill="none"
-                    strokeWidth={`${strokeWidth}px`}
-                    strokeDasharray="10,10"
-                  />
-                ) : (
-                  <path
-                    // key={`${element.from}-${element.to}`}
-                    id={`${this.props.md5}-path${index + 1}`}
-                    d="M0 0"
-                    stroke={element.color || color}
-                    fill="none"
-                    strokeWidth={`${strokeWidth}px`}
-                  />
-                )
-              ))}
+              {elements.map(
+                (element, index) =>
+                  element.isLeft ? (
+                    <path
+                      // key={`${element.from}-${element.to}`}
+                      id={`${this.props.md5}-path${index + 1}`}
+                      // onClick={element.onClick}
+                      d="M0 0"
+                      // style={{ cursor: 'crosshair', pointerEvents: 'auto' }}
+                      stroke={element.color || color}
+                      fill="none"
+                      strokeWidth={`${strokeWidth}px`}
+                      strokeDasharray="10,10"
+                    />
+                  ) : (
+                    <path
+                      // key={`${element.from}-${element.to}`}
+                      id={`${this.props.md5}-path${index + 1}`}
+                      // onClick={element.onClick}
+                      d="M0 0"
+                      // style={{ cursor: 'crosshair', pointerEvents: 'auto' }}
+                      stroke={element.color || color}
+                      fill="none"
+                      strokeWidth={`${strokeWidth}px`}
+                    />
+                  )
+              )}
             </svg>
           </div>
         </Portal>
