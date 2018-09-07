@@ -29,15 +29,17 @@ export const drawPath = (svg, path, startX, startY, endX, endY) => {
     arc2 = 0;
   }
 
-  // draw tha pipe-like path
+  // draw path
   // 1. move a bit down, 2. arch,  3. move a bit to the right, 4.arch, 5. move down to the end
+  const aCalc = startX + delta * signum(deltaX);
   path.setAttribute(
     'd',
-    `M${startX} ${startY} V${startY +
-      delta} A${delta} ${delta} 0 0 ${arc1} ${startX +
-      delta * signum(deltaX)} ${startY + 2 * delta} H${endX -
-      delta * signum(deltaX)} A${delta} ${delta} 0 0 ${arc2} ${endX} ${startY +
-      3 * delta} V${endY}`
+    `M${startX} ${startY}
+      V${startY + delta}
+      A${delta} ${delta} 0 0 ${arc1} ${aCalc} ${startY + 2 * delta}
+      H${endX - delta * signum(deltaX)}
+      A${delta} ${delta} 0 0 ${arc2} ${endX} ${startY + 3 * delta}
+      V${endY}`
   );
 };
 
